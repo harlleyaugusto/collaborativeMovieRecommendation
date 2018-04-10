@@ -1,0 +1,40 @@
+# depslib dependency file v1.0
+1523384860 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/main.cpp
+	<iostream>
+	"Reader.h"
+
+1523397438 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Reader.h
+
+1523397439 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Reader.cpp
+	"Reader.h"
+	<fstream>
+	<iostream>
+	<stdlib.h>
+	"Item.h"
+	<string>
+	<sstream>
+	<algorithm>
+
+1523396301 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Item.cpp
+	"Item.h"
+	<fstream>
+	<iostream>
+	<stdlib.h>
+	"Item.h"
+	<string>
+	<sstream>
+	<algorithm>
+
+1523395521 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Item.h
+	<map>
+	<string>
+	<iterator>
+
+1523383406 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Similarity.cpp
+	"Similarity.h"
+	"Item.h"
+	<cmath>
+
+1523381174 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Similarity.h
+	"Item.h"
+
