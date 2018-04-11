@@ -20,13 +20,22 @@ Item::~Item()
 }
 
 
+void Item::addRating(double rating)
+{
+    ratings[rating];
+    calculateMean();
+}
+
 void Item::calculateMean()
 {
 
-    cout << "Harlley";
     for (map<int,double>::iterator it=ratings.begin(); it!=ratings.end(); ++it)
     {
+        mean += it->second;
         cout << it->first << " => " << it->second << '\n';
     }
-
+    mean /= ratings.size();
+    cout << "mean: " << mean << '\n';
 }
+
+

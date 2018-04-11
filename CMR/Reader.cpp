@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ Reader::Reader()
 }
 
 
-void Reader::readRatings()
+map<int, Item> Reader::readRatings()
 {
     ifstream inFile;
     string line;
@@ -61,7 +62,7 @@ void Reader::readRatings()
 
           //  cout << rating << endl;
 
-            items[itemId].ratings[userId] = rating;
+            items[itemId].addRating(rating);
 
             /*
             if (!items.find(itemId) == items.end() )
@@ -85,22 +86,43 @@ void Reader::readRatings()
     */
 
     inFile.close();
+    return items;
 }
 
-void Reader::readTarget()
+map<int, int> Reader::readTarget()
 {
     ifstream inFile;
     string line;
+    string s_user;
+    string s_item;
+
+    int userId;
+    int itemId;
+    int total = 0;
+
+    map<int, int> targets;
 
     inFile.open("../files/targets.csv");
+
+    getline(inFile, line);
 
     while(!inFile.eof())
     {
         getline(inFile, line);
-        cout << line << endl;
-    }
+        if(!line.empty())
+        {
+             s_user = line.substr(1, line.find(":"));
+             s_item = line.substr(line.find(":") + 2, (line.find(",") - line.find(":") - 2));
 
+             userId = atoi(s_user.c_str());
+             itemId = atoi(s_item.c_str());
+
+             targets[userId] = itemId;
+
+        }
+    }
     inFile.close();
+    return targets;
 }
 
 Reader::~Reader()

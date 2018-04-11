@@ -1,6 +1,7 @@
 #include "Similarity.h"
 #include "Item.h"
 #include <cmath>
+#include <map>
 
 Similarity::Similarity()
 {
@@ -15,12 +16,21 @@ Similarity::~Similarity()
 
 double Consine(Item i, Item j)
 {
-    double dot = 0.0, denom_a = 0.0, denom_b = 0.0 ;
-    //for(unsigned int i = 0u; i < Vector_Length; ++i) {
-        //dot += A[i] * B[i] ;
-        //denom_a += A[i] * A[i] ;
-        //denom_b += B[i] * B[i] ;
-    //}
-    return dot / (sqrt(denom_a) * sqrt(denom_b)) ;
+    double dot = 0.0, denomA = 0.0, denomB = 0.0 ;
+
+    map<int, double> ri = i.ratings;
+
+    map<int, double> rj = j.ratings;
+
+
+    for(map<int,double>::iterator it = ri.begin(); it != ri.end(); ++it) {
+        if ( rj.find(it->first) != rj.end() ) {
+            // found
+            dot += it->second * rj[it->first];
+            denomA += it->second * it->second;
+            denomB += rj[it->first]*rj[it->first];
+        }
+    }
+    return dot / (sqrt(denomA) * sqrt(denomA)) ;
 
 }

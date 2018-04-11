@@ -4,19 +4,14 @@
 
 using namespace std;
 
-map<string, int> initMap()
-{
-    map<string, int> theMap;
-    /* do stuff in theMap */
-    return theMap;
-}
-
 int main()
 {
-    cout << "Hello world!" << endl;
+    Reader r;
+    map<int, Item> matUtility = r.readRatings();
+    map<int, int> targets = r.readTarget();
 
-    map<string, int> myMap;
-    myMap = initMap(  );
+    Item i;
+    matUtility[2171847].calculateMean();
 
     return 0;
 }

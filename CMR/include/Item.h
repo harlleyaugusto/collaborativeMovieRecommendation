@@ -13,6 +13,7 @@ class Item
         virtual ~Item();
         map<int, double> ratings;
         void calculateMean();
+        void addRating(double rating);
         double mean;
 
     protected:

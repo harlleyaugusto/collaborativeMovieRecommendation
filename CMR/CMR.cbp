@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -32,6 +34,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Item.cpp" />
+		<Unit filename="Reader.cpp" />
+		<Unit filename="Similarity.cpp" />
+		<Unit filename="include/Item.h" />
+		<Unit filename="include/Reader.h" />
+		<Unit filename="include/Similarity.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

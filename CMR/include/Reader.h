@@ -1,14 +1,15 @@
 #ifndef READER_H
 #define READER_H
-
+#include <map>
+#include "Item.h"
 
 class Reader
 {
     public:
         Reader();
         virtual ~Reader();
-        static void readRatings();
-        static void readTarget();
+        static map<int, Item> readRatings();
+        static map<int, int>readTarget();
 
     protected:
 
