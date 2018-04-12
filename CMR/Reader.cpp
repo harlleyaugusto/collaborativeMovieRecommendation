@@ -22,7 +22,7 @@ Reader::~Reader()
 }
 
 
-map<int, Item> Reader::readRatings(map<int, User> &users)
+double** Reader::readRatings(map<int, User> &users, map<int, Item> &items)
 {
     ifstream inFile;
     string line;
@@ -30,14 +30,13 @@ map<int, Item> Reader::readRatings(map<int, User> &users)
     string s_item;
     string s_rating;
 
-/*mmmmmmmatrix*/
-    int userId;
-    int itemId;
+    int userId, uMatId = 0;
+    int itemId, iMatId = 0;
     double rating;
 
     inFile.open("../files/ratings.csv");
 
-    map<int, Item> matUtility;
+    //map<int, Item> matUtility;
 
 
     getline(inFile, line);
@@ -48,6 +47,7 @@ map<int, Item> Reader::readRatings(map<int, User> &users)
 
         if(!line.empty())
         {
+
             s_user = line.substr(1, line.find(":"));
 
             s_item = line.substr(line.find(":") + 2, (line.find(",") - line.find(":") - 2));
@@ -60,13 +60,56 @@ map<int, Item> Reader::readRatings(map<int, User> &users)
             itemId = atoi(s_item.c_str());
             rating = atof(s_rating.c_str());
 
-            users[userId].items.push_back(itemId);
-            matUtility[itemId].addRating(userId, rating);
+            if(items.find(itemId) == items.end())
+            {
+                items[itemId].id = iMatId;
+                if(users.find(userId) == users.end())
+                {
+                    users[userId].id = uMatId;
+                    uMatId++;
+                    users[userId].items.push_back(iMatId);
+                }
+                else
+                {
+                    users[userId].items.push_back(iMatId);
+                }
+                iMatId++;
+            }
+            else
+            {
+                if(users.find(userId) == users.end())
+                {
+                    users[userId].id = uMatId;
+                    uMatId++;
+                    users[userId].items.push_back(items[itemId].id);
+                }
+                else
+                {
+                    users[userId].items.push_back(items[itemId].id);
+                }
+            }
+
+            items[itemId].addRating(userId, rating);
         }
     }
 
+    double **mat = new double *[users.size()];
+
+        for(int i = 0; i < users.size(); i++)
+            mat[i] = new double[items.size()];
+
+    for(map<int,Item>::iterator it=items.begin(); it!=items.end(); ++it)
+    {
+        for (map<int, double>::iterator itt = it->second.ratings.begin(); itt != it->second.ratings.end() ; ++itt)
+        {
+            mat[users[itt->first].id][items[it->first].id] = itt->second;
+
+        }
+
+    }
+
     inFile.close();
-    return matUtility;
+    return mat;
 }
 
 map<pair<int, int>, double> Reader::readTarget()

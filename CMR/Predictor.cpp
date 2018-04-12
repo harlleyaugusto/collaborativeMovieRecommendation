@@ -17,39 +17,34 @@ Predictor::~Predictor()
 }
 
 
-double Predictor::ItemBasedPredictor(int userId, int itemId, map<int, Item> matUtility, map<int, User> users,
-                                     map<pair<int, int>, double> sims)
+double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility, map<int, User> &users, map<int, Item> &items,
+                                     map<pair<int, int>, double> &sims)
 {
 
     Similarity s;
     double sim = 0.0, pred = 0.0, num = 0.0, den = 0.0;
     int qtd = 0;
     int qtdItem = 10;
+    int currentIdItem;
 
-
-    for (list<int>::iterator it=users[userId].items.begin(); it != users[userId].items.end() && qtd < qtdItem; ++it)
+    if(items.find(itemId) != items.end())
     {
-        //cout << "User: " << userId << " Item i: " << itemId <<" Item j: " << *it << '\n';
-        if ( sims.find(make_pair(itemId, *it)) != sims.end() &&  sims.find(make_pair(*it, itemId)) != sims.end()) {
-            sim = sims[make_pair(itemId, *it)];
-             cout << "Nao Calculado\n";
+        int userIdPos = users[userId].id;
+        int itemIdPos = items[itemId].id;
 
-        } else {
-             sim = s.Cosine(matUtility[itemId], matUtility[*it]);
-             sims[make_pair(itemId, *it)] =  sim;
-             sims[make_pair(*it, itemId)] =  sim;
-             //cout << "---Calculado\n";
+        for (list<int>::iterator it=users[userId].items.begin(); it != users[userId].items.end() ; ++it)
+        {
+            //currentIdItem = items[*it].id;
+            sim = s.Cosine(matUtility, itemIdPos, *it, users[userId].items);
+
+            num += sim * matUtility[userIdPos][*it] ;
+            den += sim;
         }
-        num += sim * matUtility[*it].ratings[userId] ;
-        den += sim;
-        qtd++;
+    }
+    else
+    {
 
-        /*cout << "matUtility[*it].ratings[userId]: " << matUtility[*it].ratings[userId] << '\n';
-        cout << "sim: " << sim << '\n';
-        cout << "num: " << num << '\n';
-        cout << "den: " << den << '\n';
-*/
-         //cin.get();
+        return 0.0;
     }
 
     pred = num/den;

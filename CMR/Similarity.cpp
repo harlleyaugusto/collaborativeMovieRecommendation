@@ -2,6 +2,7 @@
 #include "Item.h"
 #include <cmath>
 #include <map>
+#include <list>
 
 Similarity::Similarity()
 {
@@ -13,27 +14,17 @@ Similarity::~Similarity()
     //dtor
 }
 
-
-double Similarity::Cosine(Item i, Item j)
+double Similarity::Cosine(double **matrixUtility, int i, int j, list<int>listUser)
 {
-    double dot = 0.0, denomA = 0.0, denomB = 0.0 ;
+    double dot = 0.0, denomI = 0.0, denomJ = 0.0 ;
+    for (list<int>::iterator it=listUser.begin(); it != listUser.end() ; ++it)
+    {
+            dot += matrixUtility[*it][i] * matrixUtility[*it][j];
+            denomI += matrixUtility[*it][i] * matrixUtility[*it][i];
+            denomJ+= matrixUtility[*it][j] * matrixUtility[*it][j];
 
-    map<int, double> ri = i.ratings;
-
-    map<int, double> rj = j.ratings;
-
-    int qtdUser = 3;
-    int qtd = 0;
-
-    for(map<int,double>::iterator it = ri.begin(); it != ri.end() && qtd < qtdUser; ++it) {
-        if ( rj.find(it->first) != rj.end() ) {
-            // found
-            dot += it->second * rj[it->first];
-            denomA += it->second * it->second;
-            denomB += rj[it->first]*rj[it->first];
-            qtd++;
-        }
     }
+
     if (dot == 0) return 0;
-    else return dot / (sqrt(denomA) * sqrt(denomA)) ;
+    else return dot / (sqrt(denomI) * sqrt(denomJ)) ;
 }

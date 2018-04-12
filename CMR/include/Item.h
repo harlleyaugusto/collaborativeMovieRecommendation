@@ -16,7 +16,7 @@ class Item
         void addRating(int userId, double rating);
         void toString();
         double mean;
-
+        int id;
     protected:
 
     private:

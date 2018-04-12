@@ -10,6 +10,7 @@ class User
         User();
         virtual ~User();
         list<int> items;
+        int id;
     protected:
 
     private:

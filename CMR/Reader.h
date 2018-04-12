@@ -9,7 +9,7 @@ class Reader
     public:
         Reader();
         virtual ~Reader();
-        double** readRatings(map<int, User> &users, map<int, Item> &item);
+        double** readRatings(map<int, User> &users, map<int, Item> &items );
         map<pair<int, int>, double>readTarget();
 
     protected:
