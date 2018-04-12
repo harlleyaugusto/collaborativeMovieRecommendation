@@ -17,8 +17,8 @@ Predictor::~Predictor()
 }
 
 
-double Predictor::ItemBasedPredictor(int userId, int itemId, map<int, Item> matUtility, map<int, User> users,
-                                     map<pair<int, int>, double> sims)
+double Predictor::ItemBasedPredictor(int userId, int itemId, map<int, Item> &matUtility, map<int, User> &users,
+                                     map<pair<int, int>, double> &sims)
 {
 
     Similarity s;
@@ -32,7 +32,7 @@ double Predictor::ItemBasedPredictor(int userId, int itemId, map<int, Item> matU
         //cout << "User: " << userId << " Item i: " << itemId <<" Item j: " << *it << '\n';
         if ( sims.find(make_pair(itemId, *it)) != sims.end() &&  sims.find(make_pair(*it, itemId)) != sims.end()) {
             sim = sims[make_pair(itemId, *it)];
-             cout << "Nao Calculado\n";
+             //cout << "Nao Calculado\n";
 
         } else {
              sim = s.Cosine(matUtility[itemId], matUtility[*it]);

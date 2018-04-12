@@ -9,7 +9,7 @@ class Predictor
     public:
         Predictor();
         virtual ~Predictor();
-        double ItemBasedPredictor(int userId, int itemId, map<int, Item> matUtility, map<int, User> users,   map<pair<int, int>, double> sims);
+        double ItemBasedPredictor(int userId, int itemId, map<int, Item> &matUtility, map<int, User> &users, map<pair<int, int>, double> &sims);
 
     protected:
 
