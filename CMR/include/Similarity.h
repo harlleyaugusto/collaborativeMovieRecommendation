@@ -7,7 +7,7 @@ class Similarity
     public:
         Similarity();
         virtual ~Similarity();
-        double Consine(Item i, Item j);
+        double Cosine(Item i, Item j);
         double Spearman(Item i, Item j);
     protected:
 

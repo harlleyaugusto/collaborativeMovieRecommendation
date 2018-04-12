@@ -1,14 +1,21 @@
 # depslib dependency file v1.0
-1523456874 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/main.cpp
+1523493030 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/main.cpp
 	<iostream>
 	"Reader.h"
+	"Similarity.h"
+	"Item.h"
+	"User.h"
 	<map>
+	<list>
+	"User.h"
+	"Predictor.h"
 
-1523455503 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Reader.h
+1523492575 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Reader.h
 	<map>
 	"Item.h"
+	"User.h"
 
-1523456535 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Reader.cpp
+1523492535 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Reader.cpp
 	"Reader.h"
 	<fstream>
 	<iostream>
@@ -19,7 +26,7 @@
 	<algorithm>
 	<map>
 
-1523457557 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Item.cpp
+1523464311 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Item.cpp
 	"Item.h"
 	<fstream>
 	<iostream>
@@ -29,17 +36,36 @@
 	<sstream>
 	<algorithm>
 
-1523457568 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Item.h
+1523464318 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Item.h
 	<map>
 	<string>
 	<iterator>
 
-1523455591 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Similarity.cpp
+1523484422 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Similarity.cpp
 	"Similarity.h"
 	"Item.h"
 	<cmath>
 	<map>
 
-1523381174 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Similarity.h
+1523462182 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Similarity.h
 	"Item.h"
+
+1523467197 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/User.h
+	<list>
+
+1523483814 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/Predictor.cpp
+	"Predictor.h"
+	<map>
+	"Item.h"
+	"Similarity.h"
+	<iostream>
+
+1523476850 /home/harlley/Projects/collaborativeMovieRecommendation/CMR/include/Predictor.h
+	<map>
+	"Item.h"
+	"User.h"
+
+1523467167 source:/home/harlley/Projects/collaborativeMovieRecommendation/CMR/User.cpp
+	"User.h"
+	<list>
 

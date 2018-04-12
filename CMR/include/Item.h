@@ -12,8 +12,9 @@ class Item
         Item();
         virtual ~Item();
         map<int, double> ratings;
-        void calculateMean();
-        void addRating(double rating);
+        void calculateMean(double rating);
+        void addRating(int userId, double rating);
+        void toString();
         double mean;
 
     protected:

@@ -13,12 +13,16 @@ using namespace std;
 
 Reader::Reader()
 {
-    //readRatings();
-    //readTarget();
+
+}
+
+Reader::~Reader()
+{
+    //dtor
 }
 
 
-map<int, Item> Reader::readRatings()
+map<int, Item> Reader::readRatings(map<int, User> &users)
 {
     ifstream inFile;
     string line;
@@ -33,12 +37,10 @@ map<int, Item> Reader::readRatings()
 
     inFile.open("../files/ratings.csv");
 
-    map<int, Item> items;
+    map<int, Item> matUtility;
 
 
     getline(inFile, line);
-
-    long total = 0;
 
     while(!inFile.eof())
     {
@@ -58,38 +60,16 @@ map<int, Item> Reader::readRatings()
             itemId = atoi(s_item.c_str());
             rating = atof(s_rating.c_str());
 
-            //std::cin.get();
-
-          //  cout << rating << endl;
-
-            items[itemId].addRating(rating);
-
-            /*
-            if (!items.find(itemId) == items.end() )
-            {//found
-                items[itemId].ratings[userId] = rating;
-
-            } else {
-                items[itemId].ratings[userId] = rating;
-            }*/
-
-            total++;
+            users[userId].items.push_back(itemId);
+            matUtility[itemId].addRating(userId, rating);
         }
-
     }
-
-   /* for (map<int,double>::iterator it=items[2171847].ratings.begin(); it!=items[2171847].ratings.end(); ++it)
-    {
-            cout << it->first << " => " << it->second << '\n';
-    }
-    cout << total << endl;
-    */
 
     inFile.close();
-    return items;
+    return matUtility;
 }
 
-map<int, int> Reader::readTarget()
+map<pair<int, int>, double> Reader::readTarget()
 {
     ifstream inFile;
     string line;
@@ -98,9 +78,8 @@ map<int, int> Reader::readTarget()
 
     int userId;
     int itemId;
-    int total = 0;
 
-    map<int, int> targets;
+    map<pair<int, int>, double> targets;
 
     inFile.open("../files/targets.csv");
 
@@ -117,7 +96,7 @@ map<int, int> Reader::readTarget()
              userId = atoi(s_user.c_str());
              itemId = atoi(s_item.c_str());
 
-             targets[userId] = itemId;
+             targets[make_pair(userId, itemId)] = 0.0;
 
         }
     }
@@ -125,7 +104,4 @@ map<int, int> Reader::readTarget()
     return targets;
 }
 
-Reader::~Reader()
-{
-    //dtor
-}
+

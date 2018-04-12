@@ -11,7 +11,7 @@ using namespace std;
 
 Item::Item()
 {
-
+    mean = 0.0;
 }
 
 Item::~Item()
@@ -20,22 +20,27 @@ Item::~Item()
 }
 
 
-void Item::addRating(double rating)
+void Item::addRating(int userId, double rating)
 {
-    ratings[rating];
-    calculateMean();
+    ratings[userId] = rating;
+    calculateMean(rating);
 }
 
-void Item::calculateMean()
+void Item::calculateMean(double rating)
+{
+    mean = (mean + rating) / ratings.size();
+    //cout << "mean: " << mean << '\n';
+}
+
+void Item::toString()
 {
 
     for (map<int,double>::iterator it=ratings.begin(); it!=ratings.end(); ++it)
     {
-        mean += it->second;
         cout << it->first << " => " << it->second << '\n';
     }
-    mean /= ratings.size();
-    cout << "mean: " << mean << '\n';
 }
+
+
 
 
