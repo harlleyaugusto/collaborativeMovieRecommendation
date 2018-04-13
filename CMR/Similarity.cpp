@@ -22,16 +22,12 @@ double Similarity::Cosine(Item i, Item j)
 
     map<int, double> rj = j.ratings;
 
-    int qtdUser = 3;
-    int qtd = 0;
-
-    for(map<int,double>::iterator it = ri.begin(); it != ri.end() && qtd < qtdUser; ++it) {
+    for(map<int,double>::iterator it = ri.begin(); it != ri.end() ; ++it) {
         if ( rj.find(it->first) != rj.end() ) {
             // found
             dot += it->second * rj[it->first];
             denomA += it->second * it->second;
             denomB += rj[it->first]*rj[it->first];
-            qtd++;
         }
     }
     if (dot == 0) return 0;

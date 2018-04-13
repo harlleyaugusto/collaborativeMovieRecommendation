@@ -22,7 +22,7 @@ Reader::~Reader()
 }
 
 
-map<int, Item> Reader::readRatings(map<int, User> &users)
+map<int, Item> Reader::readRatings(map<int, User> &users, string file)
 {
     ifstream inFile;
     string line;
@@ -35,7 +35,9 @@ map<int, Item> Reader::readRatings(map<int, User> &users)
     int itemId;
     double rating;
 
-    inFile.open("../files/ratings.csv");
+    //cout << f << '\n';
+
+    inFile.open(("../files/" + file).c_str());
 
     map<int, Item> matUtility;
 
@@ -69,7 +71,7 @@ map<int, Item> Reader::readRatings(map<int, User> &users)
     return matUtility;
 }
 
-map<pair<int, int>, double> Reader::readTarget()
+map<pair<int, int>, double> Reader::readTarget(string file)
 {
     ifstream inFile;
     string line;
@@ -81,7 +83,7 @@ map<pair<int, int>, double> Reader::readTarget()
 
     map<pair<int, int>, double> targets;
 
-    inFile.open("../files/targets.csv");
+    inFile.open(("../files/" + file).c_str());
 
     getline(inFile, line);
 

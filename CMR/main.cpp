@@ -10,7 +10,7 @@
 
 using namespace std;
 
-int main()
+int main(int argc, const char * argv[])
 {
     Reader r;
     Predictor p;
@@ -19,35 +19,21 @@ int main()
 
     map<int, User> users;
 
-    map<int, Item> matUtility = r.readRatings(users);
-    map<pair<int, int>, double> targets = r.readTarget();
+    string fileRatings = argv[1];
+    string fileTargets = argv[2];
+
+    map<int, Item> matUtility = r.readRatings(users, fileRatings);
+    map<pair<int, int>, double> targets = r.readTarget(fileTargets);
     map<pair<int, int>, double> sims;
 
 
-   /* for(map<int,Item>::iterator it=matUtility.begin(); it!=matUtility.end(); ++it)
-        for(map<int,double>::iterator itt=matUtility[it->first].ratings.begin(); itt!=matUtility[it->first].ratings.end(); ++itt)
-            total++;
-     cout << "Total: " << total << '\n';*/
-/*
-    for(map<int,User>::iterator it=users.begin(); it!=users.end(); ++it)
-    {
-        cout << "user: " << it->first << '\n';
-        for (list<int>::iterator it2=users[it->first].items.begin(); it2 != users[it->first].items.end(); ++it2)
-        {
-             cout << *it2 << '\n';
-        }
-        cin.get();
-    }
-    /*
-
-    */
     Similarity s;
     total = 0;
 
 
    for(map<pair<int,int>,double>::iterator it=targets.begin(); it!=targets.end(); ++it)
     {
-        p.ItemBasedPredictor(it->first.first, it->first.second, matUtility, users, sims);
+        p.itemBasedPredictor(it->first.first, it->first.second, matUtility, users, sims);
         total++;
         cout << "Total: " << total << '\n';
        // cout << "user: " << it->first << " item: " << it->second <<'\n';
