@@ -18,7 +18,7 @@ Predictor::~Predictor()
 
 
 double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility, map<int, User> &users, map<int, Item> &items,
-                                     map<pair<int, int>, double> &sims)
+                                     double **sims)
 {
 
     Similarity s;
@@ -34,8 +34,17 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
 
         for (list<int>::iterator it=users[userId].items.begin(); it != users[userId].items.end() ; ++it)
         {
-            //currentIdItem = items[*it].id;
-            sim = s.Cosine(matUtility, itemIdPos, *it, users[userId].items);
+            if (sims[itemIdPos][*it] == -1)
+            {
+                //sim = s.Cosine(matUtility, itemIdPos, *it, users[userId].items);
+                sim = s.Cosine(matUtility, itemIdPos, *it, items[itemId].users);
+                sims[itemIdPos][*it] = sim;
+                sims[*it][itemIdPos] = sim;
+            }
+            else
+            {
+                sim = sims[itemIdPos][*it];
+            }
 
             num += sim * matUtility[userIdPos][*it] ;
             den += sim;
@@ -44,7 +53,7 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
     else
     {
 
-        return 0.0;
+        return users[userId].getMean();
     }
 
     pred = num/den;

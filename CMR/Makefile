@@ -1,7 +1,9 @@
-SOURCE=main.cpp Item.cpp Item.h  Predictor.cpp Predictor.h Reader.cpp Reader.h Similarity.cpp Similarity.h User.cpp User.h
-MYPROGRAM=CMR
-
+SOURCE=main.cpp Item.cpp  Predictor.cpp Reader.cpp  Similarity.cpp  User.cpp 
+MYPROGRAM=recommender
+ARGS = ratings.csv target.csv
 CC=g++
+RATINGS = ratings.csv
+TARGETS = targets.csv
 
 #------------------------------------------------------------------------------
 
@@ -10,10 +12,11 @@ all: $(MYPROGRAM)
 
 $(MYPROGRAM): $(SOURCE)
 
-	$(CC) $(SOURCE) -o$(MYPROGRAM)
+	$(CC) $(CFLAGS) $(SOURCE) -o$(MYPROGRAM)
 
 clean:
 
-	rm -f $(MYPROGRAM)
+	rm -f $(MYPROGRAM) 
 
-run : ./$(MYPROGRAM)
+run: recommender
+	./recommender ratings.csv targets.csv 

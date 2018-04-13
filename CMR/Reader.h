@@ -9,8 +9,8 @@ class Reader
     public:
         Reader();
         virtual ~Reader();
-        double** readRatings(map<int, User> &users, map<int, Item> &items );
-        map<pair<int, int>, double>readTarget();
+        double** readRatings(map<int, User> &users, map<int, Item> &item, string file);
+        map<pair<int, int>, double>readTarget(string file);
 
     protected:
 

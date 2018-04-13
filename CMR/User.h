@@ -11,6 +11,9 @@ class User
         virtual ~User();
         list<int> items;
         int id;
+        double mean;
+        void calculateMean(double rating);
+        double getMean();
     protected:
 
     private:

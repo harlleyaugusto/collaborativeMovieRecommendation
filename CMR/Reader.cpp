@@ -22,7 +22,7 @@ Reader::~Reader()
 }
 
 
-double** Reader::readRatings(map<int, User> &users, map<int, Item> &items)
+double** Reader::readRatings(map<int, User> &users, map<int, Item> &items, string file)
 {
     ifstream inFile;
     string line;
@@ -34,7 +34,7 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items)
     int itemId, iMatId = 0;
     double rating;
 
-    inFile.open("../files/ratings.csv");
+   inFile.open(("../files/" + file).c_str());
 
     //map<int, Item> matUtility;
 
@@ -66,12 +66,16 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items)
                 if(users.find(userId) == users.end())
                 {
                     users[userId].id = uMatId;
+                    items[itemId].users.push_back(uMatId);
                     uMatId++;
                     users[userId].items.push_back(iMatId);
+                    users[userId].calculateMean(rating);
                 }
                 else
                 {
                     users[userId].items.push_back(iMatId);
+                    items[itemId].users.push_back(users[userId].id);
+                    users[userId].calculateMean(rating);
                 }
                 iMatId++;
             }
@@ -80,12 +84,16 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items)
                 if(users.find(userId) == users.end())
                 {
                     users[userId].id = uMatId;
+                    items[itemId].users.push_back(uMatId);
                     uMatId++;
                     users[userId].items.push_back(items[itemId].id);
+                    users[userId].calculateMean(rating);
                 }
                 else
                 {
                     users[userId].items.push_back(items[itemId].id);
+                    items[itemId].users.push_back(users[userId].id);
+                    users[userId].calculateMean(rating);
                 }
             }
 
@@ -95,14 +103,24 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items)
 
     double **mat = new double *[users.size()];
 
-        for(int i = 0; i < users.size(); i++)
-            mat[i] = new double[items.size()];
+    for(int i = 0; i < users.size(); i++)
+        mat[i] = new double[items.size()];
 
     for(map<int,Item>::iterator it=items.begin(); it!=items.end(); ++it)
     {
         for (map<int, double>::iterator itt = it->second.ratings.begin(); itt != it->second.ratings.end() ; ++itt)
         {
-            mat[users[itt->first].id][items[it->first].id] = itt->second;
+            //users[itt->first].mean = users[itt->first].mean/users[itt->first].items.size();
+            mat[users[itt->first].id][items[it->first].id] = itt->second - (users[itt->first].getMean());
+            
+          /*  if(users[itt->first].id == 29279)
+            {
+                cout << "item: " << it->first << " user: " << itt->first << " id:" << users[itt->first].id <<" mean: " << users[itt->first].getMean() << " rating: "<< itt->second <<" diff:" << mat[users[itt->first].id][items[it->first].id] << '\n';
+                cout << "item: " << it->first << " user: " << itt->first << " qtdItems: " <<  users[itt->first].items.size() << '\n';
+    
+            }*/
+            
+            //cin.get();
 
         }
 
@@ -112,7 +130,7 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items)
     return mat;
 }
 
-map<pair<int, int>, double> Reader::readTarget()
+map<pair<int, int>, double> Reader::readTarget(string file)
 {
     ifstream inFile;
     string line;
@@ -124,7 +142,7 @@ map<pair<int, int>, double> Reader::readTarget()
 
     map<pair<int, int>, double> targets;
 
-    inFile.open("../files/targets.csv");
+    inFile.open(("../files/" + file).c_str());
 
     getline(inFile, line);
 
