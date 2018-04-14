@@ -56,10 +56,8 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
         return users[userId].getMean();
     }
 
-    pred = num/den;
+    if (den == 0 && num == 0) return users[userId].getMean();
+    else return  (pred = users[userId].getMean() + (num/den));
 
-    //cout << "pred: " << pred << '\n';
-    //cin.get();
-
-    return pred;
+    //return pred;
 }

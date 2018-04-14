@@ -8,6 +8,8 @@
 #include <algorithm>
 #include <map>
 
+
+
 using namespace std;
 
 
@@ -130,12 +132,15 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items, strin
     return mat;
 }
 
-map<pair<int, int>, double> Reader::readTarget(string file)
+map<pair<int, int>, double> Reader::readTarget(string file, map<string, string> &stringTargets)
 {
     ifstream inFile;
     string line;
     string s_user;
     string s_item;
+
+    ostringstream str1;
+    ostringstream str2;
 
     int userId;
     int itemId;
@@ -151,13 +156,25 @@ map<pair<int, int>, double> Reader::readTarget(string file)
         getline(inFile, line);
         if(!line.empty())
         {
-             s_user = line.substr(1, line.find(":"));
-             s_item = line.substr(line.find(":") + 2, (line.find(",") - line.find(":") - 2));
 
-             userId = atoi(s_user.c_str());
-             itemId = atoi(s_item.c_str());
+            s_user = line.substr(1, line.find(":"));
+            s_item = line.substr(line.find(":") + 2, (line.find(",") - line.find(":") - 2));
 
-             targets[make_pair(userId, itemId)] = 0.0;
+            userId = atoi(s_user.c_str());
+            itemId = atoi(s_item.c_str());
+
+            str1 << userId;
+            str2 << itemId;
+
+            stringTargets[(str1.str() +  str2.str())] = line;
+        
+            str1.str("");
+            str1.clear();
+
+            str2.str("");
+            str2.clear();
+
+            targets[make_pair(userId, itemId)] = 0.0;
 
         }
     }

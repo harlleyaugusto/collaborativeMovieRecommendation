@@ -7,6 +7,10 @@
 #include <list>
 #include "User.h"
 #include "Predictor.h"
+#include <string>
+#include <iostream>
+#include <sstream>
+
 
 using namespace std;
 
@@ -24,8 +28,10 @@ int main(int argc, const char * argv[])
     map<int, User> users;
     map<int, Item> items;
 
+    map<string, string> stringTargets;
+
     double** matUtility = r.readRatings(users, items, fileRatings);
-    map<pair<int, int>, double> targets = r.readTarget(fileTargets);
+    map<pair<int, int>, double> targets = r.readTarget(fileTargets, stringTargets);
    
 
     cout << "File... (done)\n";
@@ -45,12 +51,25 @@ int main(int argc, const char * argv[])
 
 
     double pred;
+     ostringstream str1;
+     ostringstream str2;
    for(map<pair<int,int>,double>::iterator it=targets.begin(); it!=targets.end(); ++it)
     {
         pred = p.itemBasedPredictor(it->first.first, it->first.second, matUtility, users, items, sims);
         total++;
-        cout << "u" << it->first.first << ":" << "i" << it->first.second << "," << pred << '\n';
+        //cout << "u" << << ":" << "i" << it->first.second << "," << pred << '\n';
 
+        str1 << it->first.first;
+        str2 << it->first.second;
+        
+        cout << stringTargets[(str1.str() +  str2.str())] << "," << pred << '\n';
+
+        str1.str("");
+        str1.clear();
+
+        str2.str("");
+        str2.clear();
+        
         //cout << "total: " << total<< '\n';
 
 
