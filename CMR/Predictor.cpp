@@ -33,7 +33,7 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
     int qtdItem = 10;
     int currentIdItem;
 
-    int MAX_USER = 30;
+    int MAX_USER = 3;
     int userTotal = 0;
 
     vector<double> similarItems;
@@ -47,7 +47,6 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
 
         for (list<int>::iterator it=users[userId].items.begin(); it != users[userId].items.end() ; ++it)
         {
-            userTotal++;
             if (sims[itemIdPos][*it] == -1)
             {
                 sim = s.Cosine(matUtility, itemIdPos, *it, items[itemId].users);
@@ -67,10 +66,13 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
         sort(similarItems.begin(), similarItems.end(), greaterFirst);
         for (vector<double>::iterator it=similarItems.begin(); it!=similarItems.end() && userTotal < MAX_USER; ++it)
         {
+            //cout << "\n" << *it ; 
+            
             num += *it * matUtility[simToItems[*it].first][simToItems[*it].second];
             den += abs(*it);
             userTotal++;
         }
+        //cin.get();
     }
     else 
     {
