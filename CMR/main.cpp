@@ -33,13 +33,9 @@ int main(int argc, const char * argv[])
     double** matUtility = r.readRatings(users, items, fileRatings);
     map<pair<int, int>, double> targets = r.readTarget(fileTargets, stringTargets);
    
-
-    cout << "File... (done)\n";
-
     Similarity s;
     total = 0;
 
-      cout << "Similarity matrix";
     sims = new double *[items.size()];
     for(int i = 0; i < items.size(); i++)
         sims[i] = new double[items.size()];
@@ -53,28 +49,24 @@ int main(int argc, const char * argv[])
     double pred;
      ostringstream str1;
      ostringstream str2;
-   for(map<pair<int,int>,double>::iterator it=targets.begin(); it!=targets.end(); ++it)
+
+    cout << "UserId:ItemId,Prediction";
+    for(map<pair<int,int>,double>::iterator it=targets.begin(); it!=targets.end(); ++it)
     {
         pred = p.itemBasedPredictor(it->first.first, it->first.second, matUtility, users, items, sims);
         total++;
-        //cout << "u" << << ":" << "i" << it->first.second << "," << pred << '\n';
 
         str1 << it->first.first;
         str2 << it->first.second;
-        
-        cout << stringTargets[(str1.str() +  str2.str())] << "," << pred << '\n';
+
+        cout << '\n' << stringTargets[(str1.str() +  str2.str())] << "," << pred;
 
         str1.str("");
         str1.clear();
 
         str2.str("");
         str2.clear();
-        
-        //cout << "total: " << total<< '\n';
-
-
-       // cout << "user: " << it->first << " item: " << it->second <<'\n';
-        //cin.get();
+  
     }
 
     return 0;

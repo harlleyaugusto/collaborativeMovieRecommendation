@@ -25,6 +25,6 @@ double Similarity::Cosine(double **matrixUtility, int i, int j, list<int>listUse
 
     }
 
-    if (dot == 0) return 0;
+    if (dot == 0 ) return 0;
     else return dot / (sqrt(denomI) * sqrt(denomJ)) ;
 }

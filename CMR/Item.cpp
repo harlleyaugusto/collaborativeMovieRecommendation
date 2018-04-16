@@ -28,8 +28,13 @@ void Item::addRating(int userId, double rating)
 
 void Item::calculateMean(double rating)
 {
-    mean = (mean + rating) / ratings.size();
+    mean += rating;
     //cout << "mean: " << mean << '\n';
+}
+
+double Item::getMean()
+{
+    return (mean/ratings.size());
 }
 
 void Item::toString()
