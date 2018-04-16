@@ -4,6 +4,7 @@
 #include "Item.h"
 #include "Similarity.h"
 #include <iostream>
+#include <vector> 
 
 using namespace std;
 
@@ -28,15 +29,17 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
     int qtdItem = 10;
     int currentIdItem;
 
-    int MAX_USER = 20;
-    int userTotal = 0;
+    int MAX_USER = 100000;
+    int userTotal = 30;
+
+    vector<double> similarItems;
 
     if(items.find(itemId) != items.end())
     {
         int userIdPos = users[userId].id;
         int itemIdPos = items[itemId].id;
 
-        for (list<int>::iterator it=users[userId].items.begin(); it != users[userId].items.end() && MAX_USER < userTotal; ++it)
+        for (list<int>::iterator it=users[userId].items.begin(); it != users[userId].items.end() ; ++it)
         {
             userTotal++;
             if (sims[itemIdPos][*it] == -1)
@@ -52,7 +55,9 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
 
             num += sim * matUtility[userIdPos][*it] ;
             den += abs(sim);
+        
         }
+        
     }
     else 
     {
