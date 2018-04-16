@@ -11,6 +11,7 @@ class Predictor
         virtual ~Predictor();
         double itemBasedPredictor(int userId, int itemId, double **matUtility, map<int, User> &users, map<int, Item> &items,
                                      double **sims);
+        double userBasedPredictor(int userId, int itemId, double **matUtility, map<int, User> &users, map<int, Item> &items);
     protected:
 
     private:

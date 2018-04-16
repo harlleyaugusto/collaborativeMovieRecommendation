@@ -29,7 +29,6 @@ void Item::addRating(int userId, double rating)
 void Item::calculateMean(double rating)
 {
     mean += rating;
-    //cout << "mean: " << mean << '\n';
 }
 
 double Item::getMean()

@@ -4,6 +4,7 @@ ARGS = ratings.csv target.csv
 CC=g++
 RATINGS = ratings.csv
 TARGETS = targets.csv
+CFLAGS = -Wall
 
 #------------------------------------------------------------------------------
 

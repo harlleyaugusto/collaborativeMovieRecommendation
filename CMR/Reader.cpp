@@ -38,8 +38,6 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items, strin
 
    inFile.open(("../files/" + file).c_str());
 
-    //map<int, Item> matUtility;
-
 
     getline(inFile, line);
 
@@ -105,25 +103,14 @@ double** Reader::readRatings(map<int, User> &users, map<int, Item> &items, strin
 
     double **mat = new double *[users.size()];
 
-    for(int i = 0; i < users.size(); i++)
+    for(unsigned int i = 0; i < users.size(); i++)
         mat[i] = new double[items.size()];
 
     for(map<int,Item>::iterator it=items.begin(); it!=items.end(); ++it)
     {
         for (map<int, double>::iterator itt = it->second.ratings.begin(); itt != it->second.ratings.end() ; ++itt)
         {
-            //users[itt->first].mean = users[itt->first].mean/users[itt->first].items.size();
             mat[users[itt->first].id][items[it->first].id] = itt->second - (users[itt->first].getMean());
-            
-          /*  if(users[itt->first].id == 29279)
-            {
-                cout << "item: " << it->first << " user: " << itt->first << " id:" << users[itt->first].id <<" mean: " << users[itt->first].getMean() << " rating: "<< itt->second <<" diff:" << mat[users[itt->first].id][items[it->first].id] << '\n';
-                cout << "item: " << it->first << " user: " << itt->first << " qtdItems: " <<  users[itt->first].items.size() << '\n';
-    
-            }*/
-            
-            //cin.get();
-
         }
 
     }

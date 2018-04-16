@@ -9,7 +9,8 @@ class Similarity
     public:
         Similarity();
         virtual ~Similarity();
-        double Cosine(double **matrixUtility, int i, int j, list<int> listUser);
+        double CosineItem(double **matrixUtility, int i, int j, list<int> listUser);
+        double CosineUser(double **matrixUtility, int i, int j, list<int> listUser);
         double Spearman(Item i, Item j);
     protected:
 
