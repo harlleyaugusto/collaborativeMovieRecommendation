@@ -5,6 +5,7 @@
 #include "Similarity.h"
 #include <iostream>
 #include <vector> 
+#include <algorithm>  
 
 using namespace std;
 
@@ -19,6 +20,9 @@ Predictor::~Predictor()
 }
 
 
+
+bool greaterFirst (double i, double j) { return (i>j); }
+
 double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility, map<int, User> &users, map<int, Item> &items,
                                      double **sims)
 {
@@ -29,10 +33,12 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
     int qtdItem = 10;
     int currentIdItem;
 
-    int MAX_USER = 100000;
-    int userTotal = 30;
+    int MAX_USER = 30;
+    int userTotal = 0;
 
     vector<double> similarItems;
+    map<double, pair<int, int> > simToItems;
+
 
     if(items.find(itemId) != items.end())
     {
@@ -53,11 +59,18 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
                 sim = sims[itemIdPos][*it];
             }
 
-            num += sim * matUtility[userIdPos][*it] ;
-            den += abs(sim);
-        
+            //num += sim * matUtility[userIdPos][*it] ;
+            //den += abs(sim);
+            similarItems.push_back(sim);
+            simToItems[sim] = make_pair(userIdPos, *it);
         }
-        
+        sort(similarItems.begin(), similarItems.end(), greaterFirst);
+        for (vector<double>::iterator it=similarItems.begin(); it!=similarItems.end() && userTotal < MAX_USER; ++it)
+        {
+            num += *it * matUtility[simToItems[*it].first][simToItems[*it].second];
+            den += abs(*it);
+            userTotal++;
+        }
     }
     else 
     {
