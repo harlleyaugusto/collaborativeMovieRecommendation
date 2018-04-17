@@ -39,7 +39,7 @@ Nesse trabalho prático é proposto um sistema de recomendação baseado em filt
 
 Na filtragem colaborativa baseada em usuários, os \textit{ratings} dados pelos usuários similares ao usuário alvo servem como base para serem feitas as predições. Com o objetivo de determinar os usuários similares ao usuário alvo, a similaridade entre esses deve ser computada. Em seguida, essa similaridade é utilizada para ponderar a agregação dos \textit{scores} para gerar a predição final. Por outro lado, também foi implementada a filtragem colaborativa baseada em item. Nessa abordagem para fazer as recomendações para o item alvo, o primeiro passo é determinar o conjunto de itens que são similares ao item alvo. Da mesma forma que FC baseada em usuário, é necessário implementar uma métrica de similaridade utilizada para identificar as similaridade entre os itens. Em seguida, esse valor de similaridade é utilizado para ponderar a predição final para o item alvo.
 
-Nesse trabalho foi implementado um sistema de recomendação colaborativa de filmes. Para tal, foi implementado o FC baseada em item e baseada em usuário. Sendo que a implementação baseada em item alcançou melhores resultados no sistema Kaggle\footnote{https://www.kaggle.com/}. A seguir, na Seção 2 são apresentados os detalhes de implementação juntamente com a análise de complexidade e na seção Seção 3 a avaliação experimental do método. Por fim, na Seção 4 é apresentada a conclusão e as dificuldades encontradas no trabalho.
+Nesse trabalho foi implementado um sistema de recomendação colaborativa de filmes. Para tal, foi implementado o FC baseada em item e baseada em usuário. Sendo que a implementação baseada em item alcançou melhores resultados no sistema Kaggle\footnote{https://www.kaggle.com/}. A seguir, na Seção 2 são apresentados os detalhes de implementação juntamente com a análise de complexidade, na seção Seção 3 a avaliação experimental do método. Por fim, na Seção 4 é apresentada a conclusão e as dificuldades encontradas no trabalho.
 
 \section{2. Implementação}
 
@@ -61,6 +61,7 @@ Para o desenvolvimento dessa abordagem os seguintes componentes devem ser implem
 
 \noindent O ordem de complexidade para calcular a similaridade dos itens é $O(m)$. 
 
+\paragraph{Hash de itens} Para o cálculo do \textit{adjusted cosine}, é necessário saber quais usuários avaliaram os itens que se deseja calcular a similaridade. Do contrário, o tempo para calcular a similaridade de dois itens seria muito alto, pois seria necessário multiplicar todas as linhas das duas colunas que representam os itens. Assim, é criado um \texttt{hash} de usuários para armazenar a lista de usuários que avaliaram um determinado item. Dessa forma, apenas serão multiplicados na computação da similaridade os \textit{ratings} dados pelos usuários que avaliaram os itens que estão sendo comparados. A estrutura de \texttt{hash} foi utilizada por prover um acesso rápido à lista de usuários que avalariam o item. 
 
 \paragraph{Escolha da vizinhança} Para a escolha dos itens a serem utilizados para o cálculo da predição, foram escolhidos os $k$ itens mais similares de acordo com o \textit{adjusted cosine} ao item que se desejava fazer a predição para o usuário alvo. Dessa forma, afim de obter resultados mais satisfatórios torna-se necessária a variação da quantidade $k$ de itens. A complexidade da escolha da vizinhança é de $O(n)$ para ordenar o vetor de similaridade.
 
@@ -75,23 +76,35 @@ Por fim, foi necessário mapear os usuários e os itens para linhas e colunas da
 pred(a,b) = \bar{r_a} + \frac{\sum_{b\in N} sim(a,b) * (r_{b,p} - \bar{r_b})}{\sum_{b \in N} |sim(a,b)|}
 \end{equation}
 
+A complexidade final para a predição final é $O(m^2n)$, que corresponde calcular a similaridade de todos os itens e agregar as avaliações.
 
-\paragraph{Hash de itens} Para o cálculo do \textit{adjusted cosine}, é necessário saber quais usuários avaliaram os itens que se deseja calcular a similaridade. Do contrário, o tempo para calcular a similaridade de dois itens seria muito alto, pois seria necessário multiplicar todas as linhas das duas colunas que representam os itens. Assim, é criado um \texttt{hash} de usuários para armazenar a lista de usuários que avaliaram um determinado item. Dessa forma, apenas serão multiplicados na computação da similaridade os \textit{ratings} dados pelos usuários que avaliaram os itens que estão sendo comparados. A estrutura de \texttt{hash} foi utilizada por prover um acesso rápido à lista de usuários que avalariam o item. 
 
-\paragraph{Matriz de similaridade} Para evitar que a similaridades de itens fossem computadas repetidamente, foi criada uma matriz para armazenar as similaridades já computadas. Essa matriz é quadrática e tem como dimensões a quantidade de itens total. Assim, para obter a similaridade de dois itens, é verificado se a similaridade de tais itens já não foi calculada e armazenada na matriz de similaridade. Caso não tenha sido calculada, o cálculo é feito e posteriormente armazenada na matriz de similaridades. De certa forma, essa matriz reduziu o tempo de execução do sistema, pois evitava que a similaridade de dois itens fosse calculada repetidamente. Além disso, o acesso a matriz era rápido, visto que que necessitava apenas dos identificadores de cada item.
+\paragraph{Matriz de similaridade} Para evitar que a similaridades de itens fossem computadas repetidamente, foi criada uma matriz para armazenar as similaridades já computadas. Essa matriz é quadrática e tem como dimensões a quantidade de itens total. Assim, para obter a similaridade de dois itens, é verificado se a similaridade de tais itens já não foi calculada e armazenada na matriz de similaridade. Caso não tenha sido calculada, o cálculo é feito e posteriormente armazenada na matriz de similaridades. De certa forma, essa matriz reduziu o tempo de execução do sistema, pois evitava que a similaridade de dois itens fosse calculada repetidamente. Além disso, o acesso a matriz era rápido, visto que que necessitava apenas dos identificadores de cada item. 
+
+Como a FC baseada em itens é uma abordagem de ordem quadrática, a criação dessa matriz diminui o tempo de processamento da predição final.
 
 
 \subsection{2.2 FC baseada em usuário}
 
-A abordagem de FC baseada em usuário é similar à abordagem baseada em item. A diferença direta é que a similaridade é calculada entre o usuário alvo e os demais usuários que avaliaram o item que se deseja calcular a predição. Sendo assim, as mesmas estruturas apresentadas anteriormente foram utilizadas nessa abordagem, com a exceção que o \textit{adjusted cosine} é calculado entre usuários. Além disso, foi necessário criar um \textit{hash} para armazenar a lista de itens avaliados por cada usuário. Tal estrutura agiliza a computação de similaridade, pois não é necessária a multiplicação de todas as colunas dos usuários que estão sendo comparados. Ou seja, a computação da similaridade considera apenas os itens avaliados em comum pelos dois usuários.
+A abordagem de FC baseada em usuário é similar à abordagem baseada em item. A diferença direta é que a similaridade é calculada entre o usuário alvo e os demais usuários que avaliaram o item que se deseja calcular a predição. Sendo assim, as mesmas estruturas apresentadas anteriormente foram utilizadas nessa abordagem, com a exceção que o \textit{adjusted cosine} é calculado entre usuários. Além disso, foi necessário criar um \textit{hash} para armazenar a lista de itens avaliados por cada usuário. Tal estrutura agiliza a computação de similaridade, pois não é necessária a multiplicação de todas as colunas dos usuários que estão sendo comparados. Ou seja, a computação da similaridade considera apenas os itens avaliados em comum pelos dois usuários. 
 
+Visto que essa abordagem é semelhante a baseada em item, a complexidade é também semelhante, sendo um algoritmo de ordem quadrática.
 
 \section{3. Resultados}
 
 \section{4. Conclusão e dificuldades}
 
+Nesse trabalho foi desenvolvido um sistema de recomeção de filmes. Para tal, foram desenvolvidas duas abordagens: filtragem colaborativa baseada em item e baseada em usuário. Sendo que a abordagem baseada em item obteve melhores resultados de acordo com os resultados apresentados no Kaggle. Para implementação de tal sistema as seguintes dificuldades:
 
+\begin{enumerate}
+ \item \textbf{Implementação utilizando C++.} Não conhecimento pleno da linguagem tornou o tempo de implementação ainda maior. Em particular, a passagem de parâmetro padrão nessa linguagem é por cópia. Isso deixava a execução do sistema desenvolvido bastante lento. Entretanto, passando os parâmetros por referência diminuiu consideravelmente o tempo de execução. Esse ponto atrasou consideravelmente o desenvolvimento do trabalho.
+ 
+ \item \textbf{Otimização do código.} A primeira versão do sistema, a matriz de utilidade foi implementada utilizando \texttt{hash}. Entretanto, tal implementação demorava cerca de 8 minutos para gerar todas as predições do arquivo de entrada. Assim, foi implementada uma nova versão em que a matriz de utilidade é implementada com uma matriz bidimensional, reduzindo o tempo de processamento.
+ 
+ \item \textbf{Otimização dos resultados.} A primeira abordagem implementada foi a CF baseada em item. Como tal, abordagem não apresentou bons resultados no Kaggle, foi também implementada a CF baseada em usuário, que também não obteve bons resultados. Diante disso, foram feitos vários esforços para melhorar a qualidade da predição que não surtiram efeitos.
+\end{enumerate}
 
+Apesar dos resultados não satisfatórios em relação a predição 
 
 
 %\small
@@ -100,7 +113,7 @@ A abordagem de FC baseada em usuário é similar à abordagem baseada em item. A
 % \bibitem{2}Nivio Ziviani. Projeto de Algoritmos. Segunda Edição.
 % \end{thebibliography}
 
-\bibliographystyle{ieeetr}
+%\bibliographystyle{ieeetr}
 \bibliography{simple}
 
 \end{document}

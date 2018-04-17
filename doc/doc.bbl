@@ -1,11 +1,14 @@
-\begin{thebibliography}{1}
-
-\bibitem{abnt-url-package=url}
-
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.6 }
 
 \bibitem{Jannach2010}
-D.~Jannach, M.~Zanker, A.~Felfernig, and G.~Friedrich, {\em Recommender
-  Systems: An Introduction}.
-\newblock New York, NY, USA: Cambridge University Press, 1st~ed., 2010.
+\abntrefinfo{Jannach et al.}{JANNACH et al.}{2010}
+{JANNACH, D. et al. \emph{Recommender Systems: An Introduction}. 1st. ed. New
+  York, NY, USA: Cambridge University Press, 2010.
+ISBN 0521493366, 9780521493369.}
 
 \end{thebibliography}

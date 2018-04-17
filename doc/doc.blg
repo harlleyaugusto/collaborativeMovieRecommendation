@@ -1,51 +1,65 @@
 This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: doc.aux
-The style file: ieeetr.bst
+The style file: abntex2-num.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
 Database file #1: abntex2-options.bib
-Warning--entry type for "abnt-url-package=url" isn't style-file defined
---line 199 of file abntex2-options.bib
 Database file #2: simple.bib
-Warning--all relevant fields are empty in abnt-url-package=url
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
++---------------------------------------------------------+
+| Estilo bibliográfico abntex2-num.bst versão v-1.9.6           |
+| Em caso de dúvidas ou problemas com este estilo procure |
+| http://www.abntex.net.br/                               |
++---------------------------------------------------------+
 You've used 2 entries,
-            1876 wiz_defined-function locations,
-            488 strings with 3692 characters,
-and the built_in function-call counts, 290 in all, are:
-= -- 18
-> -- 15
-< -- 0
-+ -- 6
-- -- 4
-* -- 18
-:= -- 45
-add.period$ -- 3
+            6714 wiz_defined-function locations,
+            1206 strings with 9532 characters,
+and the built_in function-call counts, 1760 in all, are:
+= -- 261
+> -- 35
+< -- 1
++ -- 60
+- -- 10
+* -- 100
+:= -- 288
+add.period$ -- 5
 call.type$ -- 2
-change.case$ -- 1
-chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 13
-empty$ -- 36
-format.name$ -- 4
-if$ -- 66
+change.case$ -- 17
+chr.to.int$ -- 5
+cite$ -- 1
+duplicate$ -- 48
+empty$ -- 103
+format.name$ -- 55
+if$ -- 416
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 2
-newline$ -- 10
-num.names$ -- 1
-pop$ -- 9
+int.to.str$ -- 0
+missing$ -- 31
+newline$ -- 13
+num.names$ -- 4
+pop$ -- 57
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 8
 quote$ -- 0
-skip$ -- 9
-stack$ -- 0
-substring$ -- 0
-swap$ -- 1
+skip$ -- 122
+stack$ -- 1
+substring$ -- 67
+swap$ -- 21
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 1
-width$ -- 3
-write$ -- 16
-(There were 2 warnings)
+warning$ -- 0
+while$ -- 7
+width$ -- 0
+write$ -- 21

@@ -94,9 +94,17 @@ Visto que essa abordagem é semelhante a baseada em item, a complexidade é tamb
 
 \section{4. Conclusão e dificuldades}
 
-Nesse trabalho foi desenvolvido 
+Nesse trabalho foi desenvolvido um sistema de recomeção de filmes. Para tal, foram desenvolvidas duas abordagens: filtragem colaborativa baseada em item e baseada em usuário. Sendo que a abordagem baseada em item obteve melhores resultados de acordo com os resultados apresentados no Kaggle. Para implementação de tal sistema as seguintes dificuldades:
 
+\begin{enumerate}
+ \item \textbf{Implementação utilizando C++.} Não conhecimento pleno da linguagem tornou o tempo de implementação ainda maior. Em particular, a passagem de parâmetro padrão nessa linguagem é por cópia. Isso deixava a execução do sistema desenvolvido bastante lento. Entretanto, passando os parâmetros por referência diminuiu consideravelmente o tempo de execução. Esse ponto atrasou consideravelmente o desenvolvimento do trabalho.
+ 
+ \item \textbf{Otimização do código.} A primeira versão do sistema, a matriz de utilidade foi implementada utilizando \texttt{hash}. Entretanto, tal implementação demorava cerca de 8 minutos para gerar todas as predições do arquivo de entrada. Assim, foi implementada uma nova versão em que a matriz de utilidade é implementada com uma matriz bidimensional, reduzindo o tempo de processamento.
+ 
+ \item \textbf{Otimização dos resultados.} A primeira abordagem implementada foi a CF baseada em item. Como tal, abordagem não apresentou bons resultados no Kaggle, foi também implementada a CF baseada em usuário, que também não obteve bons resultados. Diante disso, foram feitos vários esforços para melhorar a qualidade da predição que não surtiram efeitos.
+\end{enumerate}
 
+Apesar dos resultados das predições não foram satisfatórios, com esse trabalho foi possível passar por todas as etapas de desenvolvimento da abordagem colaborativa baseada em item e em usuário. 
 
 %\small
 % \begin{thebibliography}{}
@@ -104,7 +112,7 @@ Nesse trabalho foi desenvolvido
 % \bibitem{2}Nivio Ziviani. Projeto de Algoritmos. Segunda Edição.
 % \end{thebibliography}
 
-\bibliographystyle{ieeetr}
+%\bibliographystyle{ieeetr}
 \bibliography{simple}
 
 \end{document}
