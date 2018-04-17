@@ -18,7 +18,8 @@
 \usepackage{epstopdf}
 %\usepackage{algorithmic}
 \usepackage{subfigure}
-
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 \onehalfspacing
 \sloppy
 
@@ -92,26 +93,58 @@ Visto que essa abordagem é semelhante a baseada em item, a complexidade é tamb
 
 \section{3. Resultados}
 
+Nessa seção são apresentados os resultados referentes a abordagem baseada em item, visto que tal implementação obteve melhor resultado no Kaggle.
+
+Na implementação do sistema, foi proposta a utilização da matriz de similaridade para evitar a computação de similaridades de itens já calculados anteriormente. Na Tabela~\ref{comXsem} mostra o tempo de execução do algoritmo com a utilização da matriz de similaridade e sem a matriz de similaridade, considerando toda a vizinhança. Como pode ser visto, a diferença entre o tempo de execução é cerca de 90 segundos a menos utilizando a matriz de similaridade, trazendo uma melhora significativa.
+
+\begin{table}[!t]
+  \centering
+  \begin{tabular}{P{6cm} | P{6cm} }
+  \hline\hline
+  Com a matriz de similaridade & Sem a matriz de similaridade \\
+       1m25.090s          &   2m54.018   \\ \hline\hline
+  \end{tabular}
+    \caption{Tempo de execução com e sem a matriz de similaridade, considerando toda a vizinhança.}
+      \label{comXsem}
+\end{table}
+
+A Tabela~\ref{variacaoK} mostra o tempo de execução do sistema a medida que o número $k$ de itens semelhantes aumenta, tanto com a matriz de similaridade quanto sem tal matriz. Comparando as duas colunas fica claro que a abordagem que utiliza a matriz de similaridade possui sempre um tempo de processamento menor. Além disso, a medida que $k$ aumenta, o tempo de execução do sistema se mantém praticamente constante, utilizando a matriz de similaridade. Tal fato também ocorre sem a utilização da matriz, ainda que com $k$ igual a 120 o tempo de execução aumenta quase 16 segundos em relação a $k$ igual a 1. 
+
+Em relação a qualidade das predições obtido no Kaggle, o melhor resultado obtido foi com a abordagem baseada em item alcançou RMSE igual a 2.30395. Ainda tentando melhor os resultados, foram feitas variações no tamanho $k$ da vizinhança, não acarretando em melhora significativa. Diante de tal resultado não satisfatório, foi implementada a FC baseada em usuário, que também não melhorou a qualidade das predições. 
+
+\begin{table}[!t]
+  \centering
+
+  \begin{tabular}{P{2cm} | P{4cm} | P{4cm} }
+  \hline\hline
+  $k$ & Com a matriz de similaridade (s) & Sem a matriz de similaridade (s) \\ \hline \hline
+      1 & 74.006           & 168.470  \\
+      5 &  74.196        &  168.179 \\
+      10 &   74.857          &  175.885 \\
+      15 &    74.861         &  170.551 \\
+      30 &     74.386       &   164.456\\
+      60 &      73.206       & 171.873  \\
+      90 &      78.649      &  169.900 \\
+      120 &       83.895   &  184.972 \\ \hline\hline
+  \end{tabular}
+    \caption{Tempo de execução com e variando o tamanho $k$ da vizinhança.}
+  \label{variacaoK}
+\end{table}
+
 \section{4. Conclusão e dificuldades}
 
-Nesse trabalho foi desenvolvido um sistema de recomeção de filmes. Para tal, foram desenvolvidas duas abordagens: filtragem colaborativa baseada em item e baseada em usuário. Sendo que a abordagem baseada em item obteve melhores resultados de acordo com os resultados apresentados no Kaggle. Para implementação de tal sistema as seguintes dificuldades:
+Nesse trabalho foi desenvolvido um sistema de recomendação de filmes. Para tal, foram desenvolvidas duas abordagens: filtragem colaborativa baseada em item e baseada em usuário. Sendo que a abordagem baseada em item obteve melhores resultados de acordo com os resultados apresentados no Kaggle. Para implementação de tal sistema as seguintes dificuldades foram encontradas:
 
 \begin{enumerate}
- \item \textbf{Implementação utilizando C++.} Não conhecimento pleno da linguagem tornou o tempo de implementação ainda maior. Em particular, a passagem de parâmetro padrão nessa linguagem é por cópia. Isso deixava a execução do sistema desenvolvido bastante lento. Entretanto, passando os parâmetros por referência diminuiu consideravelmente o tempo de execução. Esse ponto atrasou consideravelmente o desenvolvimento do trabalho.
+ \item \textbf{Implementação utilizando C++.} A falta de conhecimento pleno na linguagem tornou o tempo de implementação ainda maior. Em particular, a passagem de parâmetro padrão nessa linguagem é por cópia. Isso deixava a execução do sistema desenvolvido bastante lento. Entretanto, passando os parâmetros por referência diminuiu consideravelmente o tempo de execução.  Esse ponto atrasou consideravelmente o desenvolvimento do trabalho.
  
- \item \textbf{Otimização do código.} A primeira versão do sistema, a matriz de utilidade foi implementada utilizando \texttt{hash}. Entretanto, tal implementação demorava cerca de 8 minutos para gerar todas as predições do arquivo de entrada. Assim, foi implementada uma nova versão em que a matriz de utilidade é implementada com uma matriz bidimensional, reduzindo o tempo de processamento.
+ \item \textbf{Otimização do código.} Na primeira versão do sistema, a matriz de utilidade foi implementada utilizando \texttt{hash}. Entretanto, tal implementação demorava cerca de 8 minutos para gerar todas as predições do arquivo de entrada. Assim, foi implementada uma nova versão em que a matriz de utilidade é implementada com uma matriz bidimensional, reduzindo o tempo de processamento. Isso também atrasou a implementação do sistema.
  
- \item \textbf{Otimização dos resultados.} A primeira abordagem implementada foi a CF baseada em item. Como tal, abordagem não apresentou bons resultados no Kaggle, foi também implementada a CF baseada em usuário, que também não obteve bons resultados. Diante disso, foram feitos vários esforços para melhorar a qualidade da predição que não surtiram efeitos.
+ \item \textbf{Otimização dos resultados.} A primeira abordagem implementada foi a FC baseada em item. Como tal, abordagem não apresentou bons resultados no Kaggle, foi também implementada a FC baseada em usuário, que também não obteve bons resultados. Diante disso, foram feitos vários esforços para melhorar a qualidade das predições que não surtiram efeitos.
 \end{enumerate}
 
-Apesar dos resultados não satisfatórios em relação a predição 
+Apesar dos resultados das predições não foram satisfatórios, com esse trabalho foi possível passar por todas as etapas de desenvolvimento da abordagem colaborativa baseada em item e em usuário, sendo elas: seleção da vizinhança, agregação dos \textit{ratings} e normalização dos dados. Além disso, foi feito uma esforço considerável para manter o tempo de execução baixo e, conforme apresentado, 
 
-
-%\small
-% \begin{thebibliography}{}
-% \bibitem{1}Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Cliford Stein. Algoritmos Teoria e Pratica. Segunda Edição.
-% \bibitem{2}Nivio Ziviani. Projeto de Algoritmos. Segunda Edição.
-% \end{thebibliography}
 
 %\bibliographystyle{ieeetr}
 \bibliography{simple}
