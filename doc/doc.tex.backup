@@ -1,0 +1,68 @@
+\documentclass[brazil,a4paper,11pt]{article}
+
+%\usepackage[num]{abntcite}
+\usepackage[utf8]{inputenc}
+\usepackage{sbc-template}
+
+%\usepackage{algpseudocode}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{sbc-template}
+\usepackage{setspace}
+%\usepackage{algorithm}
+\usepackage{epstopdf}
+%\usepackage{algorithmic}
+\usepackage{subfigure}
+
+\onehalfspacing
+\sloppy
+
+\title{Trabalho prático 1: Collaborative Movie Recommendation}
+
+\author{Harlley Augusto de Lima}
+\address{Universidade Federal de Minas Gerais\\
+Instituto de Ciências Exatas\\
+\email{harlley@dcc.ufmg.br}}
+
+
+\begin{document}
+\maketitle
+
+\section{Introdução}
+
+Para esse trabalho prático é implementado um sistema de recomendação baseado em filtragem colaborativa (FC). Para tanto, é implementado a filtragem colaborativa baseada em na similaridades de usuários e na similaridades de itens. 
+
+Na filtragem colaborativa baseada em usuários, a avaliação dada por usuários similares ao usuário alvo servem como base para serem feitas para o usuário alvo. Com o objetivo de determinar os usuários similares ao usuários alvo, sua similaridade com os demais usuários é computada. Em seguida, essa similaridade é utilizada para ponderar a predição final. Por outro lado, a filtragem colaborativo baseada em item para fazer as recomendações para o item alvo, o primeiro passo é determinas o conjunto de itens que são similares ao item alvo. Da mesma forma que FC baseada em usuário, é necessário implementar uma métrica de similaridade utilizada para identificar as similaridade entre os itens. Em seguida, esse valor é utilizado para ponderar a predição final para o item alvo.
+
+Esse trabalho tem foi implementado um sistema de recomendação colaborativa de filmes. Para tal, foi implementado o FC baseada em item e baseada em usuário. Sendo que a implementação baseada em item alcançou melhores resultados no sistema Kaggle\footnote{https://www.kaggle.com/}. A seguir, na Seção Implementação são apresentados os detalhes de implementação juntamente com a análise de complexidade e na seção Resultados são apresentados os resultados da implementação.
+
+\section{Implementação}
+
+Essa seção mostra os detalhes de implementação dos componentes da FC baseada em item e em usuários. De certa forma, as duas abordagens apresentam componentes semelhantes detalhados a seguir.
+
+\subsection{FC baseada em itens}
+
+\paragraph{\texttt{Cosseno}} 
+
+\subsection{FC baseada em usuários}
+
+\section{Análise de complexidade}
+
+\section{Resultados}
+
+
+\small
+\begin{thebibliography}{}
+\bibitem{1}Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Cliford Stein. Algoritmos Teoria e Pratica. Segunda Edição.
+\bibitem{2}Nivio Ziviani. Projeto de Algoritmos. Segunda Edição.
+\end{thebibliography}
+
+%\bibliographystyle{abbrv}
+%\bibliography{simple}
+
+\end{document}
