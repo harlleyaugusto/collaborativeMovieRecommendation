@@ -20,8 +20,23 @@ Predictor::~Predictor()
 }
 
 
+/**
+*    Funcao auxiliar para fazer a ordenacao dos items mais similares
+*/
+bool greaterFirst (double i, double j) { return (i > j) ; }
 
-bool greaterFirst (double i, double j) { return (i>j); }
+
+/**
+*    Funcao que implementa a filtragem colaborativa baseada em item
+     Parametros:    userId: usuario que se deseja fazer a predicao
+                    itemId: item a ser feito a predicao
+                    matUtility: matriz de utilidade
+                    users: map com os dados dos usuarios
+                    items: map com os dados dos items
+                    sims: matriz com as similaridades dos itens ja calculadas
+     Retorno:       pred: a predicao do itemId para o userId
+*/
+
 
 double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility, map<int, User> &users, map<int, Item> &items,
                                      double **sims)
@@ -42,22 +57,28 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
         int userIdPos = users[userId].id;
         int itemIdPos = items[itemId].id;
 
+        //O item que se deseja calcular o score eh comparado com os items que o usuario avaliou previamente
         for (list<int>::iterator it=users[userId].items.begin(); it != users[userId].items.end() ; ++it)
         {
+            // Se a similaridade dos itens não estiverem sido calculada, é feito o calculo
             if (sims[itemIdPos][*it] == -1)
             {
-                sim = s.CosineItem(matUtility, itemIdPos, *it, items[itemId].users);
+                sim = s.cosineItem(matUtility, itemIdPos, *it, items[itemId].users);
                 sims[itemIdPos][*it] = sim;
                 sims[*it][itemIdPos] = sim;
             }
             else
-            {
+            {// Caso contrario, a similaridade é obtida da matriz de similiridade
                 sim = sims[itemIdPos][*it];
             }
             similarItems.push_back(sim);
             simToItems[sim] = make_pair(userIdPos, *it);
         }
+
+        //Ordena os items pela similaridade
         sort(similarItems.begin(), similarItems.end(), greaterFirst);
+
+        //Calculo da predicao com os k itens mais similares
         for (vector<double>::iterator it=similarItems.begin(); it!=similarItems.end() && userTotal < MAX_USER; ++it)
         {
             
@@ -86,6 +107,15 @@ double Predictor::itemBasedPredictor(int userId, int itemId, double **matUtility
 
 }
 
+/**
+*    Funcao que implementa a filtragem colaborativa baseada em usuario
+     Parametros:    userId: usuario que se deseja fazer a predicao
+                    itemId: item a ser feito a predicao
+                    matUtility: matriz de utilidade
+                    users: map com os dados dos usuarios
+                    items: map com os dados dos items
+     Retorno:       pred: a predicao do itemId para o userId
+*/
 
 double Predictor::userBasedPredictor(int userId, int itemId, double **matUtility, map<int, User> &users, map<int, Item> &items)
 {
@@ -105,13 +135,17 @@ double Predictor::userBasedPredictor(int userId, int itemId, double **matUtility
         int userIdPos = users[userId].id;
         int itemIdPos = items[itemId].id;
 
+        //Calculo da similaridade dos ususario com os usuarios que avaliaram o itemId
         for (list<int>::iterator it=items[itemId].users.begin(); it != items[itemId].users.end() ; ++it)
         {
-            sim = s.CosineUser(matUtility, userIdPos, *it, users[userId].items);
+            sim = s.cosineUser(matUtility, userIdPos, *it, users[userId].items);
             similarUser.push_back(sim);
             simToUser[sim] = make_pair(*it, itemIdPos);
         }
+         //Ordena os usuarios pela similaridade
         sort(similarUser.begin(), similarUser.end(), greaterFirst);
+
+        //Calculo da predicao com os k usuarios mais similares
         for (vector<double>::iterator it=similarUser.begin(); it!=similarUser.end() && itemTotal < MAX_ITEM; ++it)
         {
         

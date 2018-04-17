@@ -20,4 +20,4 @@ clean:
 	rm -f $(MYPROGRAM) 
 
 run: recommender
-	./recommender ratings.csv targets.csv
+	./recommender ratings.csv targets.csv > submission.csv

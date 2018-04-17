@@ -14,9 +14,18 @@ Similarity::~Similarity()
     //dtor
 }
 
-double Similarity::CosineItem(double **matrixUtility, int i, int j, list<int>listUser)
+/**
+	Calcula o conseno dos itens i e j.
+		Parametros:    matriz de utilidade
+					   items i e j
+					   lista de usuarios que avaliaram o item i
+*/
+
+double Similarity::cosineItem(double **matrixUtility, int i, int j, list<int>listUser)
 {
     double dot = 0.0, denomI = 0.0, denomJ = 0.0 ;
+
+    //Calculo dos componentes do coseno
     for (list<int>::iterator it=listUser.begin(); it != listUser.end() ; ++it)
     {
             dot += matrixUtility[*it][i] * matrixUtility[*it][j];
@@ -29,8 +38,15 @@ double Similarity::CosineItem(double **matrixUtility, int i, int j, list<int>lis
     else return dot / (sqrt(denomI) * sqrt(denomJ)) ;
 }
 
+/**
+	Calcula o conseno dos usuarios i e j.
+		Parametros:    matriz de utilidade
+					   usuarios i e j
+					   lista de items que avaliados pelo usuarios i
+*/
 
-double Similarity::CosineUser(double **matrixUtility, int i, int j, list<int>listItem)
+
+double Similarity::cosineUser(double **matrixUtility, int i, int j, list<int>listItem)
 {
     double dot = 0.0, denomI = 0.0, denomJ = 0.0 ;
     for (list<int>::iterator it=listItem.begin(); it != listItem.end() ; ++it)

@@ -26,23 +26,22 @@ void Item::addRating(int userId, double rating)
     calculateMean(rating);
 }
 
+
+/* Agregador de votos do item
+*       parametro: nota do item
+*/
 void Item::calculateMean(double rating)
 {
     mean += rating;
 }
 
+/*
+*   Media do score para o item
+*/
+
 double Item::getMean()
 {
     return (mean/ratings.size());
-}
-
-void Item::toString()
-{
-
-    for (map<int,double>::iterator it=ratings.begin(); it!=ratings.end(); ++it)
-    {
-        cout << it->first << " => " << it->second << '\n';
-    }
 }
 
 
