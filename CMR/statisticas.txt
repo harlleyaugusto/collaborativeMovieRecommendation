@@ -1,0 +1,77 @@
+Com matriz de similaridade e k = com todos 
+
+1m25.090s
+
+Sem  matriz de similaridade e k = com todos 
+
+2m54.018s
+
+
+
+
+Com a matriz e k = 1
+
+real	1m14.066s
+
+Com a matriz e k = 5
+1m14.196s
+
+
+Com a matriz e k = 10
+1m14.857
+
+Com a matriz e k = 15
+
+1m14.861s
+
+Com a matriz e k = 30
+
+1m14.386s
+
+Com a matriz e k = 60
+
+	1m12.988s
+
+Com a matriz e k = 90
+1m18.649s
+
+Com a matriz e k = 120
+
+1m23.895s
+
+
+
+
+
+
+Sem a matriz e k = 1
+
+real	2m48.470s
+
+Sem a matriz e k = 5
+
+2m48.179s
+
+
+Sem a matriz e k = 10
+2m55.885s
+
+Sem a matriz e k = 15
+
+2m50.551s
+
+Sem a matriz e k = 30
+
+2m44.456s
+
+
+Sem a matriz e k = 60
+2m51.873s
+	
+
+Sem a matriz e k = 90
+2m49.900s
+
+Sem a matriz e k = 120
+
+264.972s
